@@ -13,7 +13,7 @@ for i in range(1, 10):
     except requests.RequestException:
         print('Error')
 
-result_json = json.dumps(result)
+result_json = json.dumps(result)  # записываем в переменную данные в формате json
 
-with open("result.json", 'w', encoding='utf-8') as f:
+with open("result.json", 'w', encoding='utf-8') as f:  # записываем данные в файл в формате json
     json.dump(result, f)
