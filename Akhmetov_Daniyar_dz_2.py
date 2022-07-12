@@ -14,12 +14,20 @@ result = []
 # page_num = int(page_num)
 
 key_word = argv[1]
-page_num = int(argv[2])
 
-for i in range(0, page_num):
-    url = f'https://nur-sultan.hh.kz/search/vacancy?text={key_word}&salary=&clusters=true&area=159&ored_clusters=true&' \
-          f'enable_snippets=true&only_with_salary=true&page={i}'
-    html = get_html(url, headers)
+url = f'https://nur-sultan.hh.kz/search/vacancy?text={key_word}&salary=&clusters=true&area=159&ored_clusters=true&' \
+          f'enable_snippets=true&only_with_salary=true'
+response = get_html(url)
+soup = BeautifulSoup(response, "html.parser")
+all_page = soup.find_all("a", class_="bloko-button")
+if all_page[-2].text.isdigit():
+    count_page = int(all_page[-2].text)
+else:
+    count_page = 1
+
+for i in range(0, count_page):
+    url = url + f'&page={i}'
+    html = get_html(url)
     if html:
         soup = BeautifulSoup(html, 'html.parser')
         all_vacancy = soup.find_all('div', class_='vacancy-serp-item-body__main-info')

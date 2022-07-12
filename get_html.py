@@ -2,7 +2,7 @@ import requests
 from fake_useragent import UserAgent
 
 
-def get_html(url: str, headers):
+def get_html(url: str):
     ua = UserAgent()
     headers = {"User-Agent": ua.random}
     try:
