@@ -12,3 +12,11 @@ def insert_data(result: list):
         else:
             print('existing data')
     db.vacancy.delete_many({"test": "test"})
+    client.close()
+
+
+def find_income(number: float):
+    client = MongoClient("mongodb://localhost:27017")
+    db = client["hh"]
+    return db.vacancy.find({"min": {"$gt": number}, "max": {"$gt": number}})
+

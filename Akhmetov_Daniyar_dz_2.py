@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 from sys import argv
 from get_html import get_html
-from hh_db import insert_data
+from hh_db import insert_data, find_income
 from pprint import pprint
 
 
@@ -60,3 +60,11 @@ for i in range(0, count_page):
             result.append(vacancy)
 
 insert_data(result)
+
+income = input("Введите з/п: ")
+while not income.isdigit():
+    income = input("Введите з/п: ")
+income = float(income)
+
+for item in find_income(income):
+    pprint(item)
