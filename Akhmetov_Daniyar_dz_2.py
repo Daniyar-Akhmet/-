@@ -1,34 +1,23 @@
-import requests
 from bs4 import BeautifulSoup
-from fake_useragent import UserAgent
+from sys import argv
+from get_html import get_html
+from hh_db import insert_data
 from pprint import pprint
 
 
-def get_html(url: str, headers):
-    try:
-        session = requests.Session()
-        result = session.get(url, headers=headers)
-        result.raise_for_status()
-        return result.text
-    except(requests.RequestException, ValueError):
-        print("Error")
-        return None
-
-
-ua = UserAgent()
-headers = {"User-Agent": ua.random}
-
 result = []
 
-key_world = input("Введите вакансию: ")
-page_num = input("Введите количество запрашиваемых страниц: ")
-while not page_num.isdigit():
-    page_num = input("Введите количество запрашиваемых страниц: ")
-page_num = int(page_num)
+# key_word = input("Введите вакансию: ")
+# page_num = input("Введите количество запрашиваемых страниц: ")
+# while not page_num.isdigit():
+#     page_num = input("Введите количество запрашиваемых страниц: ")
+# page_num = int(page_num)
 
+key_word = argv[1]
+page_num = int(argv[2])
 
 for i in range(0, page_num):
-    url = f'https://nur-sultan.hh.kz/search/vacancy?text={key_world}&salary=&clusters=true&area=159&ored_clusters=true&' \
+    url = f'https://nur-sultan.hh.kz/search/vacancy?text={key_word}&salary=&clusters=true&area=159&ored_clusters=true&' \
           f'enable_snippets=true&only_with_salary=true&page={i}'
     html = get_html(url, headers)
     if html:
@@ -62,8 +51,4 @@ for i in range(0, page_num):
             vacancy['main_url'] = url
             result.append(vacancy)
 
-
-pprint(result)
-print(len(result))
-
-
+insert_data(result)
