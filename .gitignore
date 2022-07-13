@@ -4,3 +4,5 @@ result.json
 result_task_2.json
 test.txt
 work.py
+__pycache__
+.idea

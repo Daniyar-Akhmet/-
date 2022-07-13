@@ -35,7 +35,8 @@ for i in range(0, count_page):
             vacancy = {}
             vacancy['position'] = item.find('a').text
             # здесь не разобрался как брать ссылку, атрибут href возвращает None, поэтому пришлось работать со строкой
-            vacancy['url'] = str(item.find('a')).split(' ')[3].split('=', 1)[-1].strip('\"')
+            # vacancy['url'] = str(item.find('a')).split(' ')[3].split('=', 1)[-1].strip('\"')
+            vacancy['url'] = item.find('a').get('href')
             income = item.findAllNext('span', {'class': 'bloko-header-section-3'})[0].text.\
                 replace('\u202f', '').strip(' ')
             try:
