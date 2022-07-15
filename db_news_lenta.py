@@ -6,7 +6,7 @@ def insert_data(result: list):
     db = client["db_lenta"]
     db.news.insert_one({"test": "test"})
     for item in result:
-        if not bool(*db.news.find({"_id": item["_id"]})):
+        if not db.news.find_one({"_id": item["_id"]}):
             db.news.insert_one(item)
             print("insert data")
         else:
