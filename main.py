@@ -1,5 +1,6 @@
 from lxml import html
 from get_html import get_html
+from db_news_lenta import insert_data
 from datetime import date
 from pprint import pprint
 
@@ -15,7 +16,7 @@ link_top_news = 'https://lenta.ru' + top_news[0].xpath("@href")[0]
 published_top_news = str(date.today()) + ' ' + top_news[0].xpath(".//time[@class='card-big__date']//text()")[0]
 news = {}
 news['name'] = name_top_news
-news['link'] = link_top_news
+news['_id'] = link_top_news
 news['published'] = published_top_news
 all_news.append(news)
 
@@ -26,9 +27,8 @@ for item in items:
     link = 'https://lenta.ru' + item.xpath("@href")[0]
     published = str(date.today()) + ' ' + item.xpath(".//time[@class='card-mini__date']//text()")[0]
     news['name'] = name
-    news['link'] = link
+    news['_id'] = link
     news['published'] = published
     all_news.append(news)
 
-pprint(all_news)
-
+insert_data(all_news)
