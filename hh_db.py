@@ -20,3 +20,6 @@ def find_income(number: float):
     db = client["hh"]
     return db.vacancy.find({"min": {"$gt": number}, "max": {"$gt": number}})
 
+
+# for i in m_vacancies.find({'$and': [{'salary_min': {'$gte': x}}, {'salary_max': {'$gte': x}}]}):
+#         print(i)
